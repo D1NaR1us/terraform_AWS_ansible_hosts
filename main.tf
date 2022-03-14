@@ -13,24 +13,24 @@ resource "aws_instance" "terraform_ansible_host" {
   }
   count = 1
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo adduser --disabled-password --gecos '' Dinarius",
-      "sudo mkdir -p /home/Dinarius/.ssh",
-      "sudo touch /home/Dinarius/.ssh/authorized_keys",
-      "sudo echo '${var.ami_key_pair_name}' > authorized_keys",
-      "sudo mv authorized_keys /home/Dinarius/.ssh",
-      "sudo chown -R Dinarius:Dinarius /home/Dinarius/.ssh",
-      "sudo chmod 700 /home/Dinarius/.ssh",
-      "sudo chmod 600 /home/Dinarius/.ssh/authorized_keys",
-      "sudo usermod -aG sudo Dinarius"
-    ]
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "sudo adduser --disabled-password --gecos '' Dinarius",
+  #     "sudo mkdir -p /home/Dinarius/.ssh",
+  #     "sudo touch /home/Dinarius/.ssh/authorized_keys",
+  #     "sudo echo '${var.ami_key_pair_name}' > authorized_keys",
+  #     "sudo mv authorized_keys /home/Dinarius/.ssh",
+  #     "sudo chown -R Dinarius:Dinarius /home/Dinarius/.ssh",
+  #     "sudo chmod 700 /home/Dinarius/.ssh",
+  #     "sudo chmod 600 /home/Dinarius/.ssh/authorized_keys",
+  #     "sudo usermod -aG sudo Dinarius"
+  #   ]
 
     connection {
       type        = "ssh"
-      user     = "ubuntu"
+      user        = "ubuntu"
       host        = self.public_ip
       private_key = file("${var.ssh_public_key}")
     }
-  }
+  # }
 }
