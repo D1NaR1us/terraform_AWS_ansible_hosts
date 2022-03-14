@@ -20,7 +20,7 @@ resource "aws_instance" "terraform_ansible_host" {
       "sudo touch /home/Dinarius/.ssh/authorized_keys",
       "sudo echo '${var.ami_key_pair_name}' > authorized_keys",
       "sudo mv authorized_keys /home/Dinarius/.ssh",
-      "sudo chown -R myuser:myuser /home/Dinarius/.ssh",
+      "sudo chown -R Dinarius:Dinarius /home/Dinarius/.ssh",
       "sudo chmod 700 /home/Dinarius/.ssh",
       "sudo chmod 600 /home/Dinarius/.ssh/authorized_keys",
       "sudo usermod -aG sudo Dinarius"
