@@ -5,6 +5,11 @@ output "external_ip" {
 output "instance_id" {
     value = "${aws_instance.terraform_ansible_host[*].tags_all.Name}"
 }
+
+output "instance_info" {
+    value = "${aws_instance.terraform_ansible_host[*]}"
+}
+
 output "ansible_host" {
     value = formatlist(
         "%v ansible_ssh_host=%v",
