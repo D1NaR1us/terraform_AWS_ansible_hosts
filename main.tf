@@ -15,15 +15,18 @@ resource "aws_instance" "terraform_ansible_host" {
 
   provisioner "remote-exec" {
     inline = [
-        "sudo adduser --disabled-password --gecos '' myuser",
-        "sudo mkdir -p /home/myuser/.ssh",
-        "sudo touch /home/myuser/.ssh/authorized_keys",
-        "sudo echo '${var.ami_key_pair_name}' > authorized_keys",
-        "sudo mv authorized_keys /home/myuser/.ssh",
-        "sudo chown -R myuser:myuser /home/myuser/.ssh",
-        "sudo chmod 700 /home/myuser/.ssh",
-        "sudo chmod 600 /home/myuser/.ssh/authorized_keys",
-        "sudo usermod -aG sudo myuser"
+      "sudo apt-get update -y",
+      "sudo apt install -y firewalld",
+      "sudo adduser --disabled-password --gecos '' myuser",
+      "sudo mkdir -p /home/myuser/.ssh",
+      "sudo touch /home/myuser/.ssh/authorized_keys",
+      "sudo echo '${var.ami_key_pair_name}' > authorized_keys",
+      "sudo mv authorized_keys /home/myuser/.ssh",
+      "sudo chown -R myuser:myuser /home/myuser/.ssh",
+      "sudo chmod 700 /home/myuser/.ssh",
+      "sudo chmod 600 /home/myuser/.ssh/authorized_keys",
+      "sudo usermod -aG sudo myuser",
+      "sudo touch /etc/sudoers.d/myuser > myuser ALL=(ALL) NOPASSWD: ALL"
     ]
 
     connection {
