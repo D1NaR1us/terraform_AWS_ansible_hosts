@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "terraform_ansible_host" {
-  ami           = "ami-06ec8443c2a35b0ba"
+  ami           = "ami-0d527b8c289b4af7f"
   instance_type = "t2.micro"
   associate_public_ip_address  = true
   key_name= "myawsfreetierkey"
@@ -23,12 +23,14 @@ resource "aws_instance" "terraform_ansible_host" {
       "sudo chown -R myuser:myuser /home/myuser/.ssh",
       "sudo chmod 700 /home/myuser/.ssh",
       "sudo chmod 600 /home/myuser/.ssh/authorized_keys",
-      "sudo usermod -aG sudo myuser"
-      ]
+      "sudo usermod -aG sudo myuser",
+      "sudo touch /etc/sudoers.d/myuser",
+      "echo 'myuser ALL=(ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers.d/myuser > /dev/null"
+    ]
 
     connection {
       type        = "ssh"
-      user        = "ec2-user"
+      user        = "ubuntu"
       host        = self.public_ip
       private_key = file("${var.ssh_public_key}")
     }
