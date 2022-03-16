@@ -26,7 +26,7 @@ resource "aws_instance" "terraform_ansible_host" {
       "sudo chmod 700 /home/myuser/.ssh",
       "sudo chmod 600 /home/myuser/.ssh/authorized_keys",
       "sudo usermod -aG sudo myuser",
-      "sudo touch /etc/conf.d/myuser",
+      "sudo touch /etc/sudoers.d/myuser",
       "echo 'myuser ALL=(ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers.d/myuser > /dev/null"
     ]
 
