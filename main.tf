@@ -16,6 +16,7 @@ resource "aws_instance" "terraform_ansible_host" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update -y",
+      "sudo apt install firewalld -y",
       "sudo adduser --disabled-password --gecos '' myuser",
       "sudo mkdir -p /home/myuser/.ssh",
       "sudo touch /home/myuser/.ssh/authorized_keys",
