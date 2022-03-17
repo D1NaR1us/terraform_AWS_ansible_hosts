@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "terraform_ansible_host" {
-  ami           = "ami-0d527b8c289b4af7f"
+  ami           = "ami-06ec8443c2a35b0ba"
   instance_type = "t2.micro"
   associate_public_ip_address  = true
   key_name= "myawsfreetierkey"
@@ -15,8 +15,8 @@ resource "aws_instance" "terraform_ansible_host" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get update -y",
-      "sudo adduser --disabled-password --gecos '' myuser",
+      "sudo yum install firewalld -y",
+      "sudo adduser myuser",
       "sudo mkdir -p /home/myuser/.ssh",
       "sudo touch /home/myuser/.ssh/authorized_keys",
       "sudo echo '${var.ami_key_pair_name}' > authorized_keys",
@@ -31,7 +31,7 @@ resource "aws_instance" "terraform_ansible_host" {
 
     connection {
       type        = "ssh"
-      user        = "ubuntu"
+      user        = "ec2-user"
       host        = self.public_ip
       private_key = file("${var.ssh_public_key}")
     }
