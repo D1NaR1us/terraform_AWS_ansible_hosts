@@ -62,6 +62,13 @@ resource "aws_security_group" "allow_tls" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    description = "ftp from VPC"
+    from_port   = 20
+    to_port     = 20
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
     description = "http from VPC"
